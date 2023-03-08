@@ -8,12 +8,12 @@ import org.apache.spark.SparkConf
 
 object SparkUtilities {
 
-  def create_spark_session(spark_config: Map[String, String]): SparkSession = {
+  def create_spark_session(app_name: String, spark_config: Map[String, String]): SparkSession = {
 
     val datetime_pattern = DateTimeFormatter
       .ofPattern("yyyy-MM-dd HH:mm:ss")
       .withZone(ZoneId.systemDefault())
-    val application_name = s"sparkSession_${datetime_pattern.format(Instant.now())}"
+    val application_name = s"${app_name}_${datetime_pattern.format(Instant.now())}"
     val sparkConf = new SparkConf()
     spark_config.foreach { case (key, value) => sparkConf.set(key, value) }
 
