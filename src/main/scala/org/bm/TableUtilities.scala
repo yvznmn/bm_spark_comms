@@ -7,7 +7,7 @@ object TableUtilities {
 
   def create_delta_table(df: DataFrame, table_name: String, table_path: String): DeltaTable = {
 
-    df.write.format("delta").mode(SaveMode.Overwrite).option("path", table_path).save(table_name)
+    df.write.format("delta").mode(SaveMode.Overwrite).save(table_path)
 
     DeltaTable
       .createOrReplace(df.sparkSession)
