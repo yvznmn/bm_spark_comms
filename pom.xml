@@ -134,7 +134,7 @@
         <executions>
           <execution>
             <configuration>
-              <wildcardSuites>com.bm.analytics.tests.unit</wildcardSuites>
+              <wildcardSuites>org.bm</wildcardSuites>
             </configuration>
             <id>unit-test</id>
             <phase>test</phase>

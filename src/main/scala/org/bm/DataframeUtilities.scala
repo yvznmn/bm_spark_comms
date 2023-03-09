@@ -3,7 +3,7 @@ package org.bm
 import org.apache.spark.sql.{DataFrame, Encoder}
 import org.scalatest.flatspec.AnyFlatSpec
 
-abstract class DataframeUtilities extends AnyFlatSpec with SparkUtilities {
+class DataframeUtilities extends AnyFlatSpec with SparkUtilities {
 
   val spark = sparkSession
 

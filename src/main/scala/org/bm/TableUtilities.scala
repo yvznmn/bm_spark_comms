@@ -3,7 +3,7 @@ package org.bm
 import io.delta.tables.DeltaTable
 import org.apache.spark.sql.{DataFrame, SaveMode}
 
-object TableUtilities {
+class TableUtilities extends DataframeUtilities {
 
   def create_delta_table(df: DataFrame, table_name: String, table_path: String): DeltaTable = {
 
