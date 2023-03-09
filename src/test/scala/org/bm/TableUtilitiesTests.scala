@@ -34,7 +34,7 @@ class TableUtilitiesTests extends AnyFlatSpec with BeforeAndAfter {
 
     val spark_config = Map("spark.master" -> "local[*]")
     val app_name = "DeltaTableCreator"
-    val spark = SparkUtilities.create_spark_session(app_name, spark_config)
+    val spark = SparkUtilities.create_spark_session
 
     import spark.implicits._
     val df = spark.createDataFrame(test_data.toDF.rdd, test_schema)

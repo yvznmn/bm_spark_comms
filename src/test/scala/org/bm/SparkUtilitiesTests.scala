@@ -8,18 +8,18 @@ import org.scalatest.BeforeAndAfter
 import java.time.format.DateTimeFormatter
 import java.time.{Instant, ZoneId}
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.bm.SparkUtilities
 
 @RunWith(classOf[JUnitRunner])
 class SparkUtilitiesTests extends AnyFlatSpec with BeforeAndAfter {
 
   var spark: SparkSession = _
+  var spark_utils: SparkUtilities = _
 
   before {
-    val spark_config = Map("spark.master" -> "local[*]")
-    val app_name = "test"
-    spark = SparkUtilities.create_spark_session(app_name, spark_config)
+    spark = SparkUtilities.create_spark_session
   }
 
   after {
@@ -30,7 +30,7 @@ class SparkUtilitiesTests extends AnyFlatSpec with BeforeAndAfter {
   it should "create a SparkSession with the expected configuration" in {
     val actual = spark.conf.get("spark.app.name").dropRight(3)
     val datetime_pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault())
-    val expected = s"test_${datetime_pattern.format(Instant.now())}".dropRight(3)
+    val expected = s"SS_for_unit_test_${datetime_pattern.format(Instant.now())}".dropRight(3)
 
     actual shouldBe expected
   }
@@ -42,5 +42,14 @@ class SparkUtilitiesTests extends AnyFlatSpec with BeforeAndAfter {
     actual shouldBe expected
   }
 
+  behavior of "verify_dataframe_equality"
+  it should "return true when the actual DataFrame matches the expected data" in {
+    val expected_data = Seq(
+      TestClass1("foo"),
+      TestClass1("bar")
+    )
 
+    val actual = spark.createDataFrame(expected_data).toDF
+    val result = spark_utils.verify_dataframe_equality(actual, expected_data)
+  }
 }
